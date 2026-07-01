@@ -1,0 +1,13 @@
+package com.clarivate.UserAPI.infraestructure.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+public class UserApiRequestConfig {
+    @Bean
+    public RestTemplate userCaller() {
+        return new RestTemplate();
+    }
+}

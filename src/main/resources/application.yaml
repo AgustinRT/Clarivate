@@ -1,0 +1,16 @@
+spring:
+    application:
+        name: UserAPI
+
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /api-docs
+    version: OPENAPI_3_1
+
+userapi:
+    basepath: https://randomuser.me/api/
+    minimal: 0
+    max: 1000

@@ -1,0 +1,8 @@
+spring:
+    application:
+        name: UserAPI
+
+userapi:
+    basepath: https://randomuser.me/api/
+    minimal: 0
+    max: 1000
