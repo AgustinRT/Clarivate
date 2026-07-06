@@ -1,0 +1,19 @@
+
+services:
+  usersdb:
+    image: postgres:16-alpine
+    container_name: usersdb
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - 5432:5432
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/initialLoad.sql:ro
+      - ./data_store:/var/lib/postgresql/data
+    networks:
+      - users_network
+
+networks:
+  users_network:
+    driver: bridge
