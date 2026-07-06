@@ -1,10 +1,9 @@
 package com.clarivate.UserAPI.infraestructure.restApi;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
-import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.clarivate.UserAPI.application.portIn.ApiUserPort;
 import com.clarivate.UserAPI.domain.exceptions.InvalidParamRequest;
+import com.clarivate.UserAPI.domain.model.InfoResponse;
+import com.clarivate.UserAPI.domain.model.ResponseUsersApi;
 import com.clarivate.UserAPI.domain.model.User;
 import com.clarivate.UserAPI.infraestructure.restAPI.controller.RandomUserController;
 import com.clarivate.UserAPI.infraestructure.sourceOfTrue.SourceOfTrueProperties;
@@ -55,18 +56,19 @@ public class RandomUserControllerTest {
         RandomUserController randomUserController = new RandomUserController(apiUserPort);
         List<User> mockUsers = workUserMocks.getRandomSubList(sizerequest);
         String pathUse = String.format("%s?results=%s", source.getBasepath(), mockUsers.size());
-        RandomUsersDTO respUserDTOMock = new RandomUsersDTO(mockUsers, Map.of());
+        InfoResponse mockInfo = new InfoResponse("23a23", "1.4", mockUsers.size(), 1);
+        RandomUsersDTO respUserDTOMock = new RandomUsersDTO(mockUsers, mockInfo);
         ResponseEntity<RandomUsersDTO> responseMock = ResponseEntity.ok(respUserDTOMock);
         Mockito.when(mockRest.exchange(pathUse,
                                         HttpMethod.GET,
                                         null,
                                         RandomUsersDTO.class)).thenReturn(responseMock);
         // WHEN
-        ResponseEntity<List<User>> responseUsers = randomUserController.getRandomUsers(sizerequest);
+        ResponseEntity<ResponseUsersApi> responseUsers = randomUserController.getRandomUsers(sizerequest);
 
         // THEN
         assertEquals(responseUsers.getStatusCode(), HttpStatus.OK);
-        assertEquals(sizerequest, responseUsers.getBody().size());
+        assertEquals(sizerequest, responseUsers.getBody().results().size());
     }
 
 
@@ -87,18 +89,19 @@ public class RandomUserControllerTest {
         RandomUserController randomUserController = new RandomUserController(apiUserPort);
         List<User> mockUsers = workUserMocks.getRandomSubList((sizerequest - 2));
         String pathUse = String.format("%s?results=%s", source.getBasepath(), sizerequest);
-        RandomUsersDTO respUserDTOMock = new RandomUsersDTO(mockUsers, Map.of());
+        InfoResponse mockInfo = new InfoResponse("23a23", "1.4", mockUsers.size(), 1);
+        RandomUsersDTO respUserDTOMock = new RandomUsersDTO(mockUsers, mockInfo);
         ResponseEntity<RandomUsersDTO> responseMock = ResponseEntity.ok(respUserDTOMock);
         Mockito.when(mockRest.exchange(pathUse,
                                         HttpMethod.GET,
                                         null,
                                         RandomUsersDTO.class)).thenReturn(responseMock);
         // WHEN
-        ResponseEntity<List<User>> responseUsers = randomUserController.getRandomUsers(sizerequest);
+        ResponseEntity<ResponseUsersApi> responseUsers = randomUserController.getRandomUsers(sizerequest);
 
         // THEN
         assertEquals(responseUsers.getStatusCode(), HttpStatus.OK);
-        assertEquals(sizerequest, responseUsers.getBody().size());
+        assertEquals(sizerequest, responseUsers.getBody().results().size());
     }
 
     @Test
@@ -115,10 +118,10 @@ public class RandomUserControllerTest {
                                         null,
                                         RandomUsersDTO.class)).thenReturn(responseMock);
         // WHEN
-        ResponseEntity<List<User>> responseUsers = randomUserController.getRandomUsers(sizerequest);
+        ResponseEntity<ResponseUsersApi> responseUsers = randomUserController.getRandomUsers(sizerequest);
 
         // THEN
         assertEquals(responseUsers.getStatusCode(), HttpStatus.OK);
-        assertEquals(sizerequest, responseUsers.getBody().size());
+        assertEquals(sizerequest, responseUsers.getBody().results().size());
     }
 }

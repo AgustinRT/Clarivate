@@ -1,9 +1,6 @@
 package com.clarivate.UserAPI.infraestructure.restAPI.controller;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.clarivate.UserAPI.application.portIn.ApiUserPort;
 import com.clarivate.UserAPI.domain.exceptions.InvalidParamRequest;
+import com.clarivate.UserAPI.domain.model.ResponseUsersApi;
 import com.clarivate.UserAPI.domain.model.User;
 
 import io.swagger.v3.oas.annotations.media.Content;
@@ -41,8 +39,8 @@ public class RandomUserController {
         @ApiResponse(responseCode = "400", description = "Invalid params used on request", content = @Content)
     })
     @GetMapping("/list-users")
-    public ResponseEntity<List<User>> getRandomUsers(@RequestParam(required=true) @Min(value=1) @Max(value=1000) Integer request) {
-        List<User> controlUsers = apiUserPort.getRandomUserList(request);
+    public ResponseEntity<ResponseUsersApi> getRandomUsers(@RequestParam(required=true) @Min(value=1) @Max(value=1000) Integer request) {
+        ResponseUsersApi controlUsers = apiUserPort.getRandomUserList(request);
         return ResponseEntity.ok(controlUsers);
     }
 

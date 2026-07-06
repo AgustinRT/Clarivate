@@ -1,9 +1,7 @@
 package com.clarivate.UserAPI.application.portIn;
 
-import java.util.List;
-
-import com.clarivate.UserAPI.domain.model.User;
+import com.clarivate.UserAPI.domain.model.ResponseUsersApi;
 
 public interface ApiUserPort {
-    List<User> getRandomUserList(Integer request);
+    ResponseUsersApi getRandomUserList(Integer request);
 }

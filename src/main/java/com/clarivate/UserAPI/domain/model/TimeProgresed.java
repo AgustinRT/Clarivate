@@ -2,7 +2,6 @@ package com.clarivate.UserAPI.domain.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 public record TimeProgresed(LocalDateTime date, Integer age) {
     public TimeProgresed(String date, Integer age){

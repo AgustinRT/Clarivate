@@ -1,8 +1,6 @@
 package com.clarivate.UserAPI.infraestructure.sourceOnTrue;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,9 +17,10 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
-import com.clarivate.UserAPI.application.adapter.UserAdapter;
 import com.clarivate.UserAPI.domain.exceptions.InvalidParamRequest;
 import com.clarivate.UserAPI.domain.exceptions.UserServiceFail;
+import com.clarivate.UserAPI.domain.model.InfoResponse;
+import com.clarivate.UserAPI.domain.model.ResponseUsersApi;
 import com.clarivate.UserAPI.domain.model.User;
 import com.clarivate.UserAPI.infraestructure.sourceOfTrue.SourceOfTrueProperties;
 import com.clarivate.UserAPI.infraestructure.sourceOfTrue.dto.RandomUsersDTO;
@@ -53,11 +52,11 @@ public class RandomUserRequestTest {
         this.managerUserMock(mockUsers);
         
         // WHEN
-        List<User> response = objetTestable.getListRandomUser(sizeCall);
+        ResponseUsersApi response = objetTestable.getListRandomUser(sizeCall);
 
         // THEN
-        assertTrue(sizeCall == response.size());
-        assertEquals(mockUsers.get(0).email(), response.get(0).email());
+        assertTrue(sizeCall == response.results().size());
+        assertEquals(mockUsers.get(0).email(), response.results().get(0).email());
     }
 
     @Test
@@ -121,7 +120,8 @@ public class RandomUserRequestTest {
 
     private void managerUserMock(List<User> mockUsers){
         String pathUse = String.format("%s?results=%s", source.getBasepath(), mockUsers.size());
-        RandomUsersDTO respUserDTOMock = new RandomUsersDTO(mockUsers, Map.of());
+        InfoResponse mockInfo = new InfoResponse("23a23", "1.4", mockUsers.size(), 1);
+        RandomUsersDTO respUserDTOMock = new RandomUsersDTO(mockUsers, mockInfo);
         ResponseEntity<RandomUsersDTO> responseMock = ResponseEntity.ok(respUserDTOMock);
         Mockito.when(mockRest.exchange(pathUse,
                                         HttpMethod.GET,

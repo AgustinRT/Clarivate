@@ -1,9 +1,7 @@
 package com.clarivate.UserAPI.infraestructure.sourceOfTrue.portOut;
 
-import java.util.List;
-
-import com.clarivate.UserAPI.domain.model.User;
+import com.clarivate.UserAPI.domain.model.ResponseUsersApi;
 
 public interface RandomUserPort {
-    List<User> getListRandomUser(Integer numberUsers);
+    ResponseUsersApi getListRandomUser(Integer numberUsers);
 }

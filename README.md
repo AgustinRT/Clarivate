@@ -153,7 +153,7 @@ Returns a list of random user profiles, either from the remote API or locally st
 - **Query Parameters**:
   - `request` *(Integer, Required)*: Number of random users to return. Must be between `1` and `1000` (inclusive).
 - **Responses**:
-  - `200 OK`: Returns a list of `User` objects.
+  - `200 OK`: Returns a `ResponseUsersApi` object, with a list of `User` objects and a `InfoResponse` object.
   - `400 Bad Request`: Triggered if the `request` parameter is missing, non-numeric, or outside the range `[1, 1000]`.
 
 #### Sample Response (Truncated)
