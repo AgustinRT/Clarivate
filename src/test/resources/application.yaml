@@ -1,6 +1,21 @@
 spring:
     application:
         name: UserAPI
+    profiles:
+        active: test
+    datasource:
+      url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/testusersdb}
+      username: ${POSTGRES_USER:admin}
+      password: ${POSTGRES_PASSWORD:admin}
+      driver-class-name: org.postgresql.Driver
+    jpa:
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          format_sql: true
+      show-sql: true
 
 userapi:
     basepath: https://randomuser.me/api/

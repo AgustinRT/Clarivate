@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.web.client.ResourceAccessException;
@@ -21,6 +23,7 @@ import com.clarivate.UserAPI.domain.exceptions.InvalidParamRequest;
 import com.clarivate.UserAPI.domain.model.InfoResponse;
 import com.clarivate.UserAPI.domain.model.ResponseUsersApi;
 import com.clarivate.UserAPI.domain.model.User;
+import com.clarivate.UserAPI.infraestructure.TestContainerInitializer;
 import com.clarivate.UserAPI.infraestructure.sourceOfTrue.SourceOfTrueProperties;
 import com.clarivate.UserAPI.infraestructure.sourceOfTrue.dto.RandomUsersDTO;
 import com.clarivate.UserAPI.infraestructure.sourceOfTrue.portOut.RandomUserPort;
@@ -30,6 +33,8 @@ import com.clarivate.UserAPI.infraestructure.sourceOfTrue.portOut.StaticUserPort
 @TestPropertySource(properties={
     "spring.config.location=classpath:application.yaml"
 })
+@ActiveProfiles(value="test")
+@ContextConfiguration(initializers = TestContainerInitializer.class)
 public class UserAdapterTest {
 
 

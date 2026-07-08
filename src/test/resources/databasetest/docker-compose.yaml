@@ -1,0 +1,22 @@
+
+services:
+  testusersdb:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=testusersdb
+    ports:
+      - 5432:5432
+    volumes:
+      - ./src/database/init.sql:/docker-entrypoint-initdb.d/initialLoad.sql:ro
+      - ./data_store:/var/lib/postgresql/data
+    networks:
+      - users_network
+
+volumes:
+  data_store:
+
+networks:
+  users_network:
+    driver: bridge

@@ -1,8 +1,10 @@
 spring:
     application:
         name: UserAPI
+    profiles:
+        active: dev
     datasource:
-      url: ${POSTGRES_URL:jdbc:postgresql://localhost:5555/usersdb}
+      url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/usersdb}
       username: ${POSTGRES_USER:admin}
       password: ${POSTGRES_PASSWORD:admin}
       driver-class-name: org.postgresql.Driver
@@ -14,7 +16,6 @@ spring:
           dialect: org.hibernate.dialect.PostgreSQLDialect
           format_sql: true
       show-sql: true
-
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
